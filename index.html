@@ -267,6 +267,16 @@
       background: rgba(237, 225, 218, 0.72);
     }
 
+    .action-btn {
+      display:inline-flex; align-items:center; justify-content:center; min-width:120px;
+      padding:11px 18px; border-radius:999px;
+      background:linear-gradient(180deg,#eadad1,#e2cec3);
+      color:#5b4e47; font-size:13px; text-decoration:none;
+      box-shadow:0 6px 12px rgba(140,109,96,0.12);
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+    }
+    .action-btn:active { transform: scale(0.96); box-shadow:0 3px 8px rgba(140,109,96,0.1); filter:brightness(0.96); }
+
     .notice {
       text-align: center;
       font-size: 12px;
@@ -313,37 +323,36 @@
 전해주시는 따뜻한 마음은
 오래도록 간직하며 살아가겠습니다.</p>
 
-        <div class="date">2026년 5월 16일</div>
+        <div class="date">2026년 5월 17일</div>
 
         <div class="family">
           강덕문 • 이순덕의 장남 혁준<br />
           강옥주 • 정서연의 장녀 다영
         </div>
       </section>
-
+      <div style="
+      margin: 60px auto 40px;
+    "></div>
       <section class="section" style="padding-top:72px;">
-  <div class="account-title">작은 자리를 마련했습니다</div>
+  <div class="account-title">위치 안내</div>
   <div style="text-align:center; background:rgba(255,255,255,0.85); border:1px solid rgba(234,221,214,0.9); border-radius:22px; padding:30px 20px; box-shadow:0 10px 24px rgba(134,110,96,0.08);">
     <div style="font-size:13px; color:#a08a7f; letter-spacing:0.08em; margin-bottom:8px;">LOCATION</div>
     <div style="font-size:17px; color:#4b3d37; font-weight:600; margin-bottom:8px;">제주 새미언덕</div>
     <div style="font-size:14px; color:#7a6861; line-height:1.8; margin-bottom:22px;">제주 제주시 중산간동로 188-6 . 1층</div>
 
     <a href="https://map.kakao.com/link/search/%EC%A0%9C%EC%A3%BC%20%EC%83%88%EB%AF%B8%EC%96%B8%EB%8D%95" target="_blank" rel="noopener noreferrer" style="display:block; border-radius:18px; overflow:hidden; border:1px solid rgba(220,200,190,0.6); margin-bottom:16px; text-decoration:none;">
-      <div style="height:180px; background:linear-gradient(180deg,#f3ece7,#efe6e0); display:flex; align-items:center; justify-content:center; flex-direction:column; color:#8f7c73; font-size:13px;">
-        <div style="font-size:15px; margin-bottom:6px;">지도 보기</div>
-        <div style="font-size:12px;">카카오맵으로 이동</div>
-      </div>
+      <img src="map.png" alt="지도" style="width:100%; height:180px; object-fit:cover; display:block;" />
     </a>
 
     <div style="display:flex; gap:10px; justify-content:center; margin-bottom:24px; flex-wrap:wrap;">
-      <a href="tel:064-752-8200" style="display:inline-flex; align-items:center; justify-content:center; min-width:120px; padding:11px 18px; border-radius:999px; background:linear-gradient(180deg,#eadad1,#e2cec3); color:#5b4e47; font-size:13px; text-decoration:none;">전화 문의하기</a>
-      <a href="https://map.kakao.com/link/to/%EC%A0%9C%EC%A3%BC%20%EC%83%88%EB%AF%B8%EC%96%B8%EB%8D%95,33.450701,126.570667" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; justify-content:center; min-width:120px; padding:11px 18px; border-radius:999px; background:linear-gradient(180deg,#eadad1,#e2cec3); color:#5b4e47; font-size:13px; text-decoration:none;">길찾기</a>
+      <a href="tel:064-752-8200" class="action-btn">전화 문의하기</a>
+      <a href="https://map.kakao.com/link/to/%EC%A0%9C%EC%A3%BC%20%EC%83%88%EB%AF%B8%EC%96%B8%EB%8D%95,33.450701,126.570667" target="_blank" rel="noopener noreferrer" class="action-btn">길찾기</a>
     </div>
 
     <div style="width:40px; height:1px; background:linear-gradient(90deg, transparent, #d3b9ad, transparent); margin:0 auto 20px;"></div>
 
     <div style="font-size:13px; color:#a08a7f; letter-spacing:0.08em; margin-bottom:8px;">TIME</div>
-    <div style="font-size:16px; color:#4b3d37; margin-bottom:22px; line-height:1.9;">2026년 5월 16일<br/>11:30 – 15:00</div>
+    <div style="font-size:16px; color:#4b3d37; margin-bottom:22px; line-height:1.9;">2026년 5월 17일<br/>11:30 – 15:00</div>
 
     <div style="width:40px; height:1px; background:linear-gradient(90deg, transparent, #d3b9ad, transparent); margin:0 auto 20px;"></div>
 
@@ -351,6 +360,13 @@
     <div style="font-size:14px; color:#6d5c55; line-height:1.8;">매장 내 주차장 이용 가능</div>
   </div>
 </section>
+
+<div style="
+  margin: 100px auto 40px;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d3b9ad, transparent);
+"></div>
 
 <section class="section account-section">
         <div class="account-title">마음 전하실 곳</div>
@@ -495,8 +511,6 @@
           }, 1400);
         }
       });
-    });
-    });
     });
   </script>
 </body>
