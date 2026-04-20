@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="format-detection" content="telephone=no, email=no, address=no" />
-  <title>모바일 청첩장</title>
+  <title>소중한 분들께 전하는 마음</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -356,17 +356,18 @@
                 <div class="account-card" data-copy="신한은행 110-496-150073 강옥주">
                   <div class="bank">신한은행</div>
                   <div class="number">110-496-150073</div>
+                  <div class="holder">강옥주</div>
                   <div class="copy-hint">⌕ 누르면 복사됩니다</div>
                 </div>
 
-                <div class="account-card">
+                <div class="account-card" data-copy="부산은행 112-2191-6902-06">
                   <div class="bank">부산은행</div>
                   <div class="number">112-2191-6902-06</div>
                   <div class="holder">정서연</div>
                   <div class="copy-hint">⌕ 누르면 복사됩니다</div>
                 </div>
 
-                <div class="account-card">
+                <div class="account-card" data-copy="부산은행 101-2048-6250-01">
                   <div class="bank">부산은행</div>
                   <div class="number">101-2048-6250-01</div>
                   <div class="holder">강다영</div>
@@ -406,21 +407,49 @@
       });
     });
 
-    document.querySelectorAll('.copy-btn').forEach((button) => {
-      button.addEventListener('click', async () => {
-        const text = button.dataset.copy;
-        const original = button.textContent;
+    document.querySelectorAll('.account-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const text = card.dataset.copy;
+        const hint = card.querySelector('.copy-hint');
+        const original = hint.textContent;
 
-        try {
-          await navigator.clipboard.writeText(text);
-          button.textContent = '복사되었습니다';
+        // 최신 방식 (HTTPS + 지원 브라우저)
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text).then(() => {
+            card.classList.add('copied');
+            hint.textContent = '복사되었습니다';
+            setTimeout(() => {
+              hint.textContent = original;
+              card.classList.remove('copied');
+            }, 1400);
+          }).catch(() => fallbackCopy());
+        } else {
+          fallbackCopy();
+        }
+
+        // iOS / 카톡 등 호환용
+        function fallbackCopy() {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.focus();
+          textarea.select();
+
+          try {
+            document.execCommand('copy');
+            card.classList.add('copied');
+            hint.textContent = '복사되었습니다';
+          } catch (err) {
+            hint.textContent = '길게 눌러 복사해주세요';
+          }
+
+          document.body.removeChild(textarea);
+
           setTimeout(() => {
-            button.textContent = original;
-          }, 1400);
-        } catch (e) {
-          button.textContent = '직접 복사해주세요';
-          setTimeout(() => {
-            button.textContent = original;
+            hint.textContent = original;
+            card.classList.remove('copied');
           }, 1400);
         }
       });
