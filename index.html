@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no, email=no, address=no" />
+  <title>모바일 청첩장</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a {
+      color: inherit !important;
+      text-decoration: none !important;
+      pointer-events: none;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Serif KR", serif;
+      color: #5a4b45;
+      line-height: 1.9;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.85), rgba(255,255,255,0) 28%),
+        linear-gradient(180deg, #f8f1ee 0%, #f4ebe6 45%, #f8f4f1 100%);
+    }
+
+    .wrap {
+      max-width: 430px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: rgba(255, 252, 249, 0.88);
+      backdrop-filter: blur(4px);
+      box-shadow: 0 8px 34px rgba(120, 91, 79, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.4), transparent 40%),
+        linear-gradient(0deg, rgba(230,210,200,0.15), transparent 50%);
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      padding: 22px 22px 0;
+    }
+
+    .hero-frame {
+      border-radius: 999px 999px 28px 28px;
+      overflow: hidden;
+      background: #efe6e0;
+      box-shadow: 0 10px 30px rgba(125, 97, 83, 0.12);
+      border: 1px solid rgba(214, 195, 186, 0.6);
+    }
+
+    .hero img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      background: #efe7e1;
+    }
+
+    .section {
+      padding: 34px 24px 0;
+    }
+
+    .intro {
+      text-align: center;
+    }
+
+    .eyebrow {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 24px;
+      letter-spacing: 0.18em;
+      color: #ab8d81;
+      margin-bottom: 12px;
+    }
+
+    .divider {
+      width: 56px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #d3b9ad, transparent);
+      margin: 0 auto 24px;
+    }
+
+    .intro-text {
+      font-size: 15px;
+      white-space: pre-line;
+      color: #5b4d47;
+      margin: 0;
+      word-break: keep-all;
+    }
+
+    .date {
+      margin-top: 26px;
+      font-size: 17px;
+      letter-spacing: 0.04em;
+      font-weight: 500;
+      color: #745d53;
+    }
+
+    .family {
+      margin-top: 20px;
+      font-size: 15px;
+      color: #6c5d56;
+      line-height: 2;
+    }
+
+    .account-section {
+      padding-bottom: 36px;
+    }
+
+    .account-title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 500;
+      color: #6e5a51;
+      margin-bottom: 18px;
+      font-family: "Cormorant Garamond", "Noto Serif KR", serif;
+      letter-spacing: 0.08em;
+    }
+
+    .sub-text {
+      text-align: center;
+      font-size: 13px;
+      color: #9a8880;
+      margin-bottom: 18px;
+    }
+
+    .accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .accordion-item {
+      border-radius: 24px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(223, 205, 196, 0.85);
+      box-shadow: 0 10px 24px rgba(131, 104, 91, 0.07);
+    }
+
+    .accordion-btn {
+      width: 100%;
+      border: none;
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(250,244,240,0.96));
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #614f48;
+      cursor: pointer;
+      font-family: "Noto Serif KR", serif;
+    }
+
+    .accordion-btn .arrow {
+      transition: transform 0.28s ease;
+      font-size: 15px;
+      color: #a08377;
+      margin-top: 1px;
+    }
+
+    .accordion-item.active .arrow {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.34s ease;
+      background: linear-gradient(180deg, rgba(252,248,245,0.96), rgba(248,242,238,0.96));
+    }
+
+    .account-list {
+      padding: 8px 14px 16px;
+    }
+
+    .account-card {
+      background: rgba(255,255,255,0.85);
+      border: 1px solid rgba(234, 221, 214, 0.9);
+      border-radius: 20px;
+      padding: 18px 16px 16px;
+      margin-top: 10px;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(134, 110, 96, 0.06);
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    .account-card:active {
+      transform: scale(0.985);
+      box-shadow: 0 3px 10px rgba(134, 110, 96, 0.08);
+      background: rgba(250, 244, 240, 0.95);
+    }
+
+    .account-card.copied {
+      background: rgba(244, 236, 231, 0.98);
+      border-color: rgba(214, 191, 181, 0.95);
+    }
+
+    .bank {
+      font-size: 13px;
+      color: #a08a7f;
+      margin-bottom: 8px;
+    }
+
+    .number {
+      font-size: 17px;
+      font-weight: 600;
+      color: #4b3d37;
+      word-break: break-all;
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+
+    .holder {
+      font-size: 14px;
+      color: #6d5c55;
+      margin-top: 8px;
+    }
+
+    .copy-hint {
+      margin-top: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #9a857b;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(237, 225, 218, 0.72);
+    }
+
+    .notice {
+      text-align: center;
+      font-size: 12px;
+      color: #9d8e87;
+      margin-top: 18px;
+    }
+
+    .footer-space {
+      height: 44px;
+    }
+
+    @media (max-width: 380px) {
+      .hero { padding: 18px 18px 0; }
+      .section { padding: 30px 18px 0; }
+      .intro-text { font-size: 14px; }
+      .number { font-size: 16px; }
+      .accordion-btn { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="content">
+      <div class="hero">
+        <div class="hero-frame">
+          <img src="wedding.png" alt="웨딩 이미지" />
+        </div>
+      </div>
+
+      <section class="section intro">
+        <div class="eyebrow">Wedding</div>
+        <div class="divider"></div>
+
+        <p class="intro-text">오랜 시간 서로를 향해 걸어온 두 사람이
+이제는 같은 길을 함께 걸어가려 합니다.
+
+이미 한 가정을 이루어 살아가고 있지만
+이번에는 가족들과 함께
+그 시작의 마음을 나누고자 합니다.
+
+직접 찾아뵙고 인사드리는 것이 도리이나
+이렇게 글로 먼저 전하게 되어 송구합니다.
+
+전해주시는 따뜻한 마음은
+오래도록 간직하며 살아가겠습니다.</p>
+
+        <div class="date">2026년 5월 16일</div>
+
+        <div class="family">
+          강덕문 • 이순덕의 장남 혁준<br />
+          강옥주 • 정서연의 장녀 다영
+        </div>
+      </section>
+
+      <section class="section account-section">
+        <div class="account-title">마음 전하실 곳</div>
+        <div class="sub-text">아래 버튼을 누르시면 계좌번호를 확인하실 수 있습니다</div>
+
+        <div class="accordion">
+          <div class="accordion-item">
+            <button class="accordion-btn" type="button">
+              <span>신랑측</span>
+              <span class="arrow">⌄</span>
+            </button>
+            <div class="accordion-content">
+              <div class="account-list">
+                <div class="account-card" data-copy="농협은행 128-121-44431 강덕문">
+                  <div class="bank">농협은행</div>
+                  <div class="number">128-121-44431</div>
+                  <div class="holder">강덕문</div>
+                  <div class="copy-hint">⌕ 누르면 복사됩니다</div>
+                </div>
+
+                <div class="account-card" data-copy="우리은행 322-080-42910 이순덕">
+                  <div class="bank">우리은행</div>
+                  <div class="number">322-080-42910</div>
+                  <div class="holder">이순덕</div>
+                  <div class="copy-hint">⌕ 누르면 복사됩니다</div>
+                </div>
+
+                <div class="account-card" data-copy="농협은행 352-0503-1637-23 강혁준">
+                  <div class="bank">농협은행</div>
+                  <div class="number">352-0503-1637-23</div>
+                  <div class="holder">강혁준</div>
+                  <div class="copy-hint">⌕ 누르면 복사됩니다</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-btn" type="button">
+              <span>신부측</span>
+              <span class="arrow">⌄</span>
+            </button>
+            <div class="accordion-content">
+              <div class="account-list">
+                <div class="account-card" data-copy="신한은행 110-496-150073 강옥주">
+                  <div class="bank">신한은행</div>
+                  <div class="number">110-496-150073</div>
+                  <div class="copy-hint">⌕ 누르면 복사됩니다</div>
+                </div>
+
+                <div class="account-card">
+                  <div class="bank">부산은행</div>
+                  <div class="number">112-2191-6902-06</div>
+                  <div class="holder">정서연</div>
+                  <div class="copy-hint">⌕ 누르면 복사됩니다</div>
+                </div>
+
+                <div class="account-card">
+                  <div class="bank">부산은행</div>
+                  <div class="number">101-2048-6250-01</div>
+                  <div class="holder">강다영</div>
+                  <div class="copy-hint">⌕ 누르면 복사됩니다</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="notice">복사 버튼을 누르면 계좌정보가 복사됩니다</div>
+      </section>
+
+      <div class="footer-space"></div>
+    </div>
+  </div>
+
+  <script>
+    const items = document.querySelectorAll('.accordion-item');
+
+    items.forEach((item) => {
+      const btn = item.querySelector('.accordion-btn');
+      const content = item.querySelector('.accordion-content');
+
+      btn.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+
+        items.forEach((otherItem) => {
+          otherItem.classList.remove('active');
+          otherItem.querySelector('.accordion-content').style.maxHeight = null;
+        });
+
+        if (!isActive) {
+          item.classList.add('active');
+          content.style.maxHeight = content.scrollHeight + 'px';
+        }
+      });
+    });
+
+    document.querySelectorAll('.copy-btn').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const text = button.dataset.copy;
+        const original = button.textContent;
+
+        try {
+          await navigator.clipboard.writeText(text);
+          button.textContent = '복사되었습니다';
+          setTimeout(() => {
+            button.textContent = original;
+          }, 1400);
+        } catch (e) {
+          button.textContent = '직접 복사해주세요';
+          setTimeout(() => {
+            button.textContent = original;
+          }, 1400);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
